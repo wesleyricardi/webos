@@ -1,4 +1,4 @@
-export default function CSSstring(string) {
+export default function CSSstring(string: string) {
   if (!string) return null;
 
   const css_json = `{"${string
