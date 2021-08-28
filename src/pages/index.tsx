@@ -47,7 +47,9 @@ export default function FloatWindow() {
   const [MenuStartopen, setMenuStartopen] = useState<boolean>(false);
   const [WindowSearchOpen, setWindowSearchOpen] = useState<boolean>(false);
   const [openWindows, setOpenWindows] = useState<OpenApps[]>([]);
-  let toResize: ResizeX | ResizeY | null;
+
+  let toResizeX: ResizeX | null;
+  let toResizeY: ResizeY | null;
   let toMove: MoveWindow | null;
 
   function OpenApp(app: string): void {
@@ -92,7 +94,7 @@ export default function FloatWindow() {
       const w = e.currentTarget.offsetWidth;
 
       if (x <= 3) {
-        toResize = {
+        toResizeX = {
           element: e.currentTarget,
           w,
           origem: "left",
@@ -102,7 +104,7 @@ export default function FloatWindow() {
       }
 
       if (x >= w - 3) {
-        toResize = {
+        toResizeX = {
           element: e.currentTarget,
           w,
           origem: "right",
@@ -112,7 +114,7 @@ export default function FloatWindow() {
       }
 
       if (y <= 3) {
-        toResize = {
+        toResizeY = {
           element: e.currentTarget,
           h,
           origem: "top",
@@ -122,7 +124,7 @@ export default function FloatWindow() {
       }
 
       if (y >= h - 3) {
-        toResize = {
+        toResizeY = {
           element: e.currentTarget,
           h,
           origem: "bottom",
@@ -138,7 +140,8 @@ export default function FloatWindow() {
 
   function unselect(): void {
     toMove = null;
-    toResize = null;
+    toResizeX = null;
+    toResizeY = null;
   }
 
   function onMove(e: any) {
@@ -177,40 +180,42 @@ export default function FloatWindow() {
       }
     }
 
-    if (toResize && toResize.element.style.minWidth !== "100vw") {
-      if (toResize.origem === "left") {
-        if (toResize.coordinates.x - x + toResize.w >= 200) {
-          toResize.element.style.left = x - toResize.x + "px";
-          toResize.element.style.width =
-            toResize.coordinates.x - x + toResize.w + "px";
+    if (toResizeX) {
+      if (toResizeX.origem === "left") {
+        if (toResizeX.coordinates.x - x + toResizeX.w >= 200) {
+          toResizeX.element.style.left = x - toResizeX.x + "px";
+          toResizeX.element.style.width =
+            toResizeX.coordinates.x - x + toResizeX.w + "px";
           (document.getElementById("main") as HTMLElement).style.cursor =
             "w-resize";
         }
       }
 
-      if (toResize.origem === "top") {
-        if (toResize.coordinates.y - y + toResize.h >= 100) {
-          toResize.element.style.top = y - toResize.y + "px";
-          toResize.element.style.height =
-            toResize.coordinates.y - y + toResize.h + "px";
+      if (toResizeX.origem === "right") {
+        if (x - toResizeX.coordinates.x + toResizeX.w > 200) {
+          toResizeX.element.style.width =
+            x - toResizeX.coordinates.x + toResizeX.w + "px";
+          (document.getElementById("main") as HTMLElement).style.cursor =
+            "w-resize";
+        }
+      }
+    }
+
+    if (toResizeY) {
+      if (toResizeY.origem === "top") {
+        if (toResizeY.coordinates.y - y + toResizeY.h >= 100) {
+          toResizeY.element.style.top = y - toResizeY.y + "px";
+          toResizeY.element.style.height =
+            toResizeY.coordinates.y - y + toResizeY.h + "px";
           (document.getElementById("main") as HTMLElement).style.cursor =
             "n-resize";
         }
       }
 
-      if (toResize.origem === "right") {
-        if (x - toResize.coordinates.x + toResize.w > 200) {
-          toResize.element.style.width =
-            x - toResize.coordinates.x + toResize.w + "px";
-          (document.getElementById("main") as HTMLElement).style.cursor =
-            "w-resize";
-        }
-      }
-
-      if (toResize.origem === "bottom") {
-        if (y - toResize.coordinates.y + toResize.h > 100) {
-          toResize.element.style.height =
-            y - toResize.coordinates.y + toResize.h + "px";
+      if (toResizeY.origem === "bottom") {
+        if (y - toResizeY.coordinates.y + toResizeY.h > 100) {
+          toResizeY.element.style.height =
+            y - toResizeY.coordinates.y + toResizeY.h + "px";
           (document.getElementById("main") as HTMLElement).style.cursor =
             "n-resize";
         }
