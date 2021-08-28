@@ -28,8 +28,9 @@ function Search({ OpenApp, closeTaskbarsWindows }: Props) {
       {SearchResult ? (
         <>
           <h4>Melhor correspondencia:</h4>
-          {SearchResult.map((result) => (
+          {SearchResult.map((result, index) => (
             <div
+              key={"search_index"}
               onClick={() => {
                 OpenApp(result.id);
                 closeTaskbarsWindows();

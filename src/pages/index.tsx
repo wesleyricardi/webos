@@ -257,7 +257,7 @@ export default function FloatWindow() {
                 unselect={unselect}
                 closeWindow={closeWindow}
                 app={app}
-                key={app.windowID}
+                key={"window_" + app.windowID}
               />
             ))}
           </>

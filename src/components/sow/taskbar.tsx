@@ -95,6 +95,7 @@ export default function Taskbar({
       </span>
       {apps.map((app) => (
         <div
+          key={"min_" + app.windowID}
           onClick={(e) => {
             maximize(e);
             closeTaskbarsWindows();

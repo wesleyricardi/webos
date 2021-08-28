@@ -36,11 +36,12 @@ const startMenuApps = [
 export default function nav({ OpenApp, closeTaskbarsWindows }: Props) {
   return (
     <nav className={style.menuStart}>
-      {startMenuApps.map((value) => (
-        <ul>
+      {startMenuApps.map((value, index_category) => (
+        <ul key={"category_" + index_category}>
           <span>{value.category}</span>
-          {value.apps.map((app) => (
+          {value.apps.map((app, index_app) => (
             <li
+              key={"app_" + index_app}
               onClick={() => {
                 OpenApp(app.id);
                 closeTaskbarsWindows();
