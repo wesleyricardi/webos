@@ -1,0 +1,95 @@
+@import "config/global.css";
+
+* {
+  padding: 0;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-light);
+}
+
+body,
+textarea,
+button,
+input {
+  font-family: var(--font-family);
+  font-size: 16px;
+}
+textarea,
+input {
+  background-color: transparent;
+  border: none;
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-dark);
+}
+
+textarea:focus,
+input:focus {
+  outline: none;
+}
+
+button,
+.bt-type-1 {
+  padding: 0.6em 1.2em;
+  background-color: var(--contrast-color);
+  color: var(--color-light);
+  border: none;
+  border-radius: 0.3em;
+}
+
+button:hover,
+.bt-type-1:hover {
+  background-color: var(--main-color);
+}
+
+.bt-type-2 {
+  display: block;
+  background: var(--color-light);
+  border: 1px dashed var(--color-less-light);
+  border-radius: 0.3em;
+  color: var(--color-grey);
+  font-weight: bold;
+  margin: 0 auto;
+}
+
+.bt-type-2:hover {
+  background: var(--color-light);
+  border: 1px dashed var(--color-grey);
+  color: var(--color-grey);
+}
+
+footer {
+  margin-top: 4em;
+  padding: 4em 0px;
+  background: var(--color-dark);
+  color: var(--color-light);
+}
+
+@media only screen and (max-width: 600px) {
+  body,
+  textarea,
+  button,
+  input {
+    font-size: 14px;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  body,
+  textarea,
+  button,
+  input {
+    font-size: 12px;
+  }
+}

@@ -1,0 +1,29 @@
+form > div {
+  margin: 1em 0;
+}
+
+form > div > label {
+  display: block;
+  transform: translateY(-1.5em);
+  color: var(--color-dark);
+  transition: ease all 300ms;
+}
+
+form > div > input:valid ~ label,
+form > div > input:not(:placeholder-shown) ~ label,
+form > div > input:focus ~ label {
+  transform: translateY(-2.5em);
+}
+
+form > div > input {
+  border-bottom: var(--color-less-dark) 3px solid;
+  width: 100%;
+}
+
+form > div > input:valid {
+  border-bottom: var(--main-color) 3px solid;
+}
+
+form > div > input:invalid:not(:placeholder-shown) {
+  border-bottom: var(--close-color) 3px solid;
+}

@@ -1,0 +1,9 @@
+.window_container {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("/background.jpg");
+  background-position: top;
+  background-size: cover;
+  padding: 10px;
+}
