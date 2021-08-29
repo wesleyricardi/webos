@@ -18,6 +18,10 @@ type OpenApps = {
   windowID: string;
 };
 
+type lastOpens = {
+  id: string;
+};
+
 interface ResizeWindow {
   element: HTMLElement;
   origem: string;
@@ -43,6 +47,12 @@ type MoveWindow = {
   y: number;
 };
 
+interface Element extends HTMLElement {
+  parentNode: Element;
+  childrenNode: HTMLCollectionOf<Element>;
+  classList: DOMTokenList;
+}
+
 export default function FloatWindow() {
   const [MenuStartopen, setMenuStartopen] = useState<boolean>(false);
   const [WindowSearchOpen, setWindowSearchOpen] = useState<boolean>(false);
@@ -64,7 +74,6 @@ export default function FloatWindow() {
             windowID: makeID(5),
             icon: App.icon,
           };
-
           setOpenWindows([...openWindows, newOpenApp]);
         } else {
           const itsReadyOpen = openWindows.some(
@@ -73,8 +82,32 @@ export default function FloatWindow() {
           if (!itsReadyOpen) setOpenWindows([...openWindows, App]);
           else alert("App já aberto");
         }
+
+        setLastOpenApp(app);
       }
     });
+  }
+
+  function setLastOpenApp(id: string) {
+    if (typeof Storage !== "undefined") {
+      let jsonNewlastApps;
+      const jsonLastOpen = localStorage.getItem("lastopens");
+
+      if (jsonLastOpen) {
+        let lastOpens: lastOpens[] = JSON.parse(jsonLastOpen);
+
+        const appIndex = lastOpens.findIndex((app) => app.id === id);
+
+        if (appIndex >= 0) {
+          lastOpens.splice(appIndex, 1);
+        } else if (lastOpens.length > 4) lastOpens.splice(4);
+
+        let newlastApps = [{ id }, ...lastOpens];
+        jsonNewlastApps = JSON.stringify(newlastApps);
+      } else jsonNewlastApps = `[{"id": "${id}"}]`;
+
+      localStorage.setItem("lastopens", jsonNewlastApps);
+    }
   }
 
   function closeWindow(id: string): void {
@@ -84,53 +117,79 @@ export default function FloatWindow() {
     setOpenWindows(newOpenWindows);
   }
 
+  function zindex(window: HTMLElement) {
+    if (window.style.zIndex !== "1000") {
+      window.style.zIndex = "1000";
+      const windows = document.getElementsByClassName(
+        "windows"
+      ) as HTMLCollectionOf<Element>;
+      for (let index = 0; index < windows.length; index++) {
+        console.log(windows[index]);
+        windows[index].style.zIndex = `${
+          parseInt(windows[index].style.zIndex) - 1
+        }`;
+      }
+      window.style.zIndex = "1000";
+    }
+  }
+
   function select(e: any): void {
-    if (e.currentTarget === e.target) {
-      const rect = e.currentTarget.getBoundingClientRect();
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const h = e.currentTarget.offsetHeight;
+    const w = e.currentTarget.offsetWidth;
+
+    if (
+      e.currentTarget === e.target ||
+      x <= 3 ||
+      y <= 3 ||
+      x >= w - 3 ||
+      y >= h - 3 ||
+      y >= 30
+    ) {
       const coordinates = { x: e.clientX, y: e.clientY };
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const h = e.currentTarget.offsetHeight;
-      const w = e.currentTarget.offsetWidth;
 
-      if (x <= 3) {
-        toResizeX = {
-          element: e.currentTarget,
-          w,
-          origem: "left",
-          x,
-          coordinates,
-        };
-      }
+      if (e.currentTarget.style.minWidth !== "100vw") {
+        if (x <= 3) {
+          toResizeX = {
+            element: e.currentTarget,
+            w,
+            origem: "left",
+            x,
+            coordinates,
+          };
+        }
 
-      if (x >= w - 3) {
-        toResizeX = {
-          element: e.currentTarget,
-          w,
-          origem: "right",
-          x,
-          coordinates,
-        };
-      }
+        if (x >= w - 3) {
+          toResizeX = {
+            element: e.currentTarget,
+            w,
+            origem: "right",
+            x,
+            coordinates,
+          };
+        }
 
-      if (y <= 3) {
-        toResizeY = {
-          element: e.currentTarget,
-          h,
-          origem: "top",
-          y,
-          coordinates,
-        };
-      }
+        if (y <= 3) {
+          toResizeY = {
+            element: e.currentTarget,
+            h,
+            origem: "top",
+            y,
+            coordinates,
+          };
+        }
 
-      if (y >= h - 3) {
-        toResizeY = {
-          element: e.currentTarget,
-          h,
-          origem: "bottom",
-          y,
-          coordinates,
-        };
+        if (y >= h - 3) {
+          toResizeY = {
+            element: e.currentTarget,
+            h,
+            origem: "bottom",
+            y,
+            coordinates,
+          };
+        }
       }
 
       if (x > 3 && y > 3 && x < w - 3 && y < h - 3 && y < 30)
@@ -256,6 +315,7 @@ export default function FloatWindow() {
                 select={select}
                 unselect={unselect}
                 closeWindow={closeWindow}
+                zindex={zindex}
                 app={app}
                 key={"window_" + app.windowID}
               />
@@ -275,6 +335,7 @@ export default function FloatWindow() {
         setWindowSearchOpen={setWindowSearchOpen}
         MenuStartopen={MenuStartopen}
         WindowSearchOpen={WindowSearchOpen}
+        zindex={zindex}
         apps={openWindows}
       />
     </>

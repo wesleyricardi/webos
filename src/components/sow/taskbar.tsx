@@ -8,6 +8,7 @@ type Props = {
   WindowSearchOpen: boolean;
   setWindowSearchOpen: (Arg: boolean) => void;
   closeTaskbarsWindows: () => void;
+  zindex: (window: HTMLElement) => void;
   apps: {
     windowID: string;
     name: string;
@@ -26,20 +27,26 @@ export default function Taskbar({
   WindowSearchOpen,
   setWindowSearchOpen,
   closeTaskbarsWindows,
+  zindex,
 }: Props) {
   const [Datetime, setDatetime] = useState<Datetime | null>(null);
 
   function minimaze(window: HTMLElement, minWindow: HTMLElement) {
-    window.style.transition = "all 300ms ease";
-    window.style.maxWidth = minWindow.offsetWidth + "px";
-    window.style.maxHeight = minWindow.offsetHeight + "px";
-    window.style.transform = `translateX(${
-      minWindow.offsetLeft - parseInt(window.style.left.slice(0, -2))
-    }px) translateY(100vh)`;
-    window.style.opacity = "0";
-    window.style.overflow = "auto";
+    const zIndex = parseInt(window.style.zIndex);
+    if (zIndex < 1000) {
+      zindex(window);
+    } else {
+      window.style.transition = "all 100ms ease";
+      window.style.maxWidth = minWindow.offsetWidth + "px";
+      window.style.maxHeight = minWindow.offsetHeight + "px";
+      window.style.transform = `translateX(${
+        minWindow.offsetLeft - parseInt(window.style.left.slice(0, -2))
+      }px) translateY(100vh)`;
+      window.style.opacity = "0";
+      window.style.overflow = "auto";
 
-    minWindow.style.backgroundColor = "transparent";
+      minWindow.style.backgroundColor = "transparent";
+    }
   }
 
   useEffect(() => {
@@ -69,6 +76,11 @@ export default function Taskbar({
       window.style.opacity = "";
       window.style.overflow = "";
       minWindow.style.backgroundColor = "";
+      if (window.style.minWidth == "100vw")
+        window.style.transform = `translateX(${
+          window.offsetLeft * -1
+        }px) translateY(${window.offsetTop * -1}px)`;
+
       new Promise((r) => setTimeout(r, 300)).then(
         () => (window.style.transition = "")
       );
@@ -99,6 +111,8 @@ export default function Taskbar({
           onClick={(e) => {
             maximize(e);
             closeTaskbarsWindows();
+            const window = document.getElementById(app.windowID);
+            if (window) zindex(window);
           }}
           id={`min-${app.windowID}`}
         >

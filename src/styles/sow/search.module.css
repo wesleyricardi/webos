@@ -29,7 +29,10 @@
 
 .searchResult > div:last-of-type > label {
   position: absolute;
-  padding-left: 10px;
+  display: inline-block;
+  height: 100%;
+  padding: 0px 10px 0px;
+  background-color: var(--search-icon-container-color);
 }
 
 .searchResult > div:last-of-type > label > img {
@@ -42,7 +45,7 @@
   display: inline-block;
   width: 100%;
   background-color: var(--color-dark);
-  padding: 5px 5px 5px 30px;
+  padding: 5px 5px 5px 35px;
   border-radius: 0;
   border: var(--color-grey) 2px solid;
   color: var(--color-light);

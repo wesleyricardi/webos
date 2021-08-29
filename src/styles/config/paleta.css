@@ -12,4 +12,14 @@
   --color-grey: #5f5f5f;
   --color-less-dark: #3b3b3b;
   --color-dark: #1d1d1d;
+
+  --deskbar-color: rgba(221, 220, 220, 0.6);
+  --deskbar-window-appearing-color: rgba(221, 220, 220, 0.8);
+  --deskbar-span-color: var(--deskbar-window-appearing-color);
+  --start-menu-color: var(--deskbar-window-appearing-color);
+  --start-menu-icon-color: rgba(102, 153, 102, 0.9);
+  --start-menu-icon-hover-color: rgba(102, 153, 102, 0.6);
+  --window-backgroud-color-default: var(--deskbar-color);
+  --window-text-color-default: var(--color-dark);
+  --search-icon-container-color: var(--deskbar-window-appearing-color);
 }

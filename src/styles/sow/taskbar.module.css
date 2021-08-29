@@ -5,18 +5,18 @@
   width: 100%;
   height: 40px;
   padding: 1px 0;
-  background-color: rgba(100, 100, 100, 0.3);
+  background-color: var(--deskbar-color);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
 
 .taskbar > span {
-  color: var(--color-light);
+  color: var(--color-dark);
   transition: all ease 300ms;
 }
 
 .taskbar > span:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: var(--deskbar-span-color);
 }
 
 .taskbar > span {
@@ -32,12 +32,12 @@
 
 .taskbar > div {
   padding: 10px 10px;
-  color: var(--color-light);
+  color: var(--color-dark);
   background: transparent;
 }
 
 .taskbar > div:nth-last-of-type(n + 2) {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: var(--deskbar-window-appearing-color);
   height: 100%;
   width: 100%;
   max-width: 200px;

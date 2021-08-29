@@ -9,7 +9,7 @@ type Props = {
     windowStyle: string;
     windowID: string;
   };
-
+  zindex: (window: HTMLElement) => void;
   select: (e: any) => void;
   unselect: (e: any) => void;
   closeWindow: (e: any) => void;
@@ -39,7 +39,9 @@ function window(props: Props) {
       if (!window.style.width) window.style.width = window.offsetWidth + "px";
       window.style.minWidth = "100vw";
       window.style.minHeight = "calc(100vh - 40px)";
-      window.style.transform = `translateX(-${window.offsetLeft}px) translateY(-${window.offsetTop}px)`;
+      window.style.transform = `translateX(${
+        window.offsetLeft * -1
+      }px) translateY(${window.offsetTop * -1}px)`;
       window.style.padding = "30px 0 0 0";
       window.style.boxShadow = "none";
       (
@@ -53,7 +55,7 @@ function window(props: Props) {
   }
 
   function minimaze(window: HTMLElement, minWindow: HTMLElement) {
-    window.style.transition = "all 300ms ease";
+    window.style.transition = "all 100ms ease";
     window.style.maxWidth = minWindow.offsetWidth + "px";
     window.style.maxHeight = minWindow.offsetHeight + "px";
     window.style.transform = `translateX(${
@@ -74,10 +76,7 @@ function window(props: Props) {
   }
 
   function hover(e: any): void {
-    if (
-      e.currentTarget === e.target &&
-      e.currentTarget.style.minWidth !== "100vw"
-    ) {
+    if (e.currentTarget.style.minWidth !== "100vw") {
       const rect = e.currentTarget.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
@@ -97,22 +96,6 @@ function window(props: Props) {
     (document.getElementById("main") as HTMLElement).style.cursor = "auto";
   }
 
-  function zindex(window: HTMLElement) {
-    if (window.style.zIndex !== "1000") {
-      window.style.zIndex = "1000";
-      const windows = document.getElementsByClassName(
-        "windows"
-      ) as HTMLCollectionOf<Element>;
-      for (let index = 0; index < windows.length; index++) {
-        console.log(windows[index]);
-        windows[index].style.zIndex = `${
-          parseInt(windows[index].style.zIndex) - 1
-        }`;
-      }
-      window.style.zIndex = "1000";
-    }
-  }
-
   return (
     <div
       id={props.app.windowID}
@@ -120,12 +103,16 @@ function window(props: Props) {
       onMouseUp={props.unselect}
       onMouseDown={(e) => {
         props.select(e);
-        zindex(e.currentTarget);
+        props.zindex(e.currentTarget);
       }}
       onDoubleClick={(e) => fullWindow(e.currentTarget)}
       onMouseMove={hover}
       onMouseOut={hoverout}
-      style={CSSstring(props.app.windowStyle + "z-index: 1001")}
+      style={
+        props.app.windowStyle
+          ? CSSstring(props.app.windowStyle + "; z-index: 1001")
+          : CSSstring("z-index: 1001")
+      }
     >
       <span>{props.app.name}</span>
       <div>

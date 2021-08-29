@@ -4,16 +4,19 @@
   left: 0px;
   height: 600px;
   width: 500px;
-  background-color: rgba(100, 100, 100, 0.3);
+  background-color: var(--start-menu-color);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
-  color: var(--color-less-light);
+  color: var(--color-dark);
 }
 
 .menuStart > ul {
-  border-bottom: rgba(255, 255, 255, 0.1) 3px solid;
   margin: 10px;
   padding-bottom: 5px;
+}
+
+.menuStart > ul:nth-of-type(n + 2) {
+  border-top: rgba(255, 255, 255, 0.4) 1px solid;
 }
 
 .menuStart > ul > span {
@@ -28,15 +31,15 @@
   margin: 2px;
   height: 90px;
   width: 90px;
-  background-color: rgba(255, 255, 255, 0.2);
-  border: rgba(255, 255, 255, 0.4) 1px solid;
+  background-color: var(--start-menu-icon-color);
+  border: rgba(255, 255, 255, 0.5) 1px solid;
   text-align: center;
   transition: background 300ms ease;
 }
 
 .menuStart > ul > li:hover {
-  background-color: rgba(255, 255, 255, 0.4);
-  border: rgba(255, 255, 255, 0.6) 1px solid;
+  background-color: var(--start-menu-icon-hover-color);
+  border: rgba(255, 255, 255, 0.7) 1px solid;
 }
 
 .menuStart > ul > li > img {

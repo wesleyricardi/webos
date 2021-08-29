@@ -8,7 +8,7 @@ const Apps = [
     name: "Hello World",
     component: <App1 />,
     icon: "/apps/helloworld.svg",
-    windowStyle: ``,
+    windowStyle: `background-color: #FFF; color: #000`,
     windowID: "1vtc4c", //APPS COM windowID preenchidas só abrem uma unica janela
   },
   {

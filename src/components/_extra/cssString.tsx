@@ -12,5 +12,6 @@ export default function CSSstring(string: string) {
     var camelCased = key.replace(/-[a-z]/g, (g) => g[1].toUpperCase());
     return { [camelCased]: obj[key] };
   });
+  //console.log(...Object.assign({}, ...keyValues));
   return Object.assign({}, ...keyValues);
 }
