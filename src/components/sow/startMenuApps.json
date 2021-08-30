@@ -1,0 +1,27 @@
+[
+  {
+    "category": "Apps demonstração",
+    "apps": [
+      {
+        "id": "4j5gf6",
+        "nome": "Hellow World",
+        "icon": "/apps/helloworld.svg"
+      },
+      {
+        "id": "8n96u7",
+        "nome": "Input Text",
+        "icon": "/apps/favicon.ico"
+      }
+    ]
+  },
+  {
+    "category": "Produtividade",
+    "apps": [
+      {
+        "id": "5k78u7",
+        "nome": "Easy",
+        "icon": "/apps/easy.png"
+      }
+    ]
+  }
+]

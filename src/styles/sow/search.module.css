@@ -4,21 +4,42 @@
   left: 45px;
   height: 600px;
   width: 500px;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: var(--search-icon-container-color);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   color: var(--color-dark);
 }
 
-.searchResult > h4,
-.searchResult > div:nth-last-of-type(n + 2) {
-  margin: 10px 10px 0px;
+.searchResult > ul {
+  background-color: var(--start-menu-emphasis);
 }
 
-.searchResult > div:nth-last-of-type(n + 2) > img {
-  height: 28px;
-  margin-top: -4px;
-  vertical-align: middle;
+.searchResult > ul > span {
+  display: block;
+  padding: 5px;
+  background-color: var(--start-menu-category);
+  border-left: var(--main-color) 4px solid;
+}
+
+.searchResult > ul > li {
+  padding: 2.5px;
+  transition: background 300ms linear;
+}
+
+.searchResult > ul > li:first-of-type {
+  padding-top: 5px;
+}
+
+.searchResult > ul > li:last-of-type {
+  padding-bottom: 5px;
+}
+
+.searchResult > ul > li:hover {
+  background-color: var(--start-menu-category);
+}
+
+.searchResult > ul > li > img {
+  height: 15px;
 }
 
 .searchResult > div:last-of-type {
@@ -32,7 +53,7 @@
   display: inline-block;
   height: 100%;
   padding: 0px 10px 0px;
-  background-color: var(--search-icon-container-color);
+  background-color: var(--color-less-light);
 }
 
 .searchResult > div:last-of-type > label > img {
@@ -50,4 +71,44 @@
   border: var(--color-grey) 2px solid;
   color: var(--color-light);
   font-weight: normal;
+}
+
+.mostUses {
+  background: var(--color-grey);
+  color: var(--color-less-light);
+}
+
+.mostUses > span {
+  display: block;
+  padding: 7.5px;
+  background-color: var(--color-dark);
+}
+.mostUses > li {
+  position: relative;
+  display: inline-block;
+  width: 80px;
+  height: 85px;
+  padding: 5px;
+  text-align: center;
+  margin: 1.5px;
+  font-size: 13px;
+  transition: all 100ms linear;
+}
+
+.mostUses > li:hover {
+  transform: scale(1.03);
+}
+
+.mostUses > li > img {
+  margin: 7.5px auto 0;
+  display: block;
+  height: 40px;
+}
+
+.mostUses > li > span {
+  position: absolute;
+  bottom: 7.5px;
+  width: 100%;
+  left: 0;
+  right: 0;
 }

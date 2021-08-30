@@ -20,6 +20,8 @@ type OpenApps = {
 
 type lastOpens = {
   id: string;
+  name: string;
+  icon: string;
 };
 
 interface ResizeWindow {
@@ -83,30 +85,59 @@ export default function FloatWindow() {
           else alert("App já aberto");
         }
 
-        setLastOpenApp(app);
+        setLastOpenApp(App);
+        setMostUseApps(App);
       }
     });
   }
 
-  function setLastOpenApp(id: string) {
+  function setLastOpenApp(App: any) {
     if (typeof Storage !== "undefined") {
-      let jsonNewlastApps;
+      let lastOpens: lastOpens[];
       const jsonLastOpen = localStorage.getItem("lastopens");
 
       if (jsonLastOpen) {
-        let lastOpens: lastOpens[] = JSON.parse(jsonLastOpen);
-
-        const appIndex = lastOpens.findIndex((app) => app.id === id);
+        lastOpens = JSON.parse(jsonLastOpen);
+        const appIndex = lastOpens.findIndex((app) => app.id === App.id);
 
         if (appIndex >= 0) {
           lastOpens.splice(appIndex, 1);
         } else if (lastOpens.length > 4) lastOpens.splice(4);
 
-        let newlastApps = [{ id }, ...lastOpens];
-        jsonNewlastApps = JSON.stringify(newlastApps);
-      } else jsonNewlastApps = `[{"id": "${id}"}]`;
+        lastOpens = [
+          { id: App.id, name: App.name, icon: App.icon },
+          ...lastOpens,
+        ];
+      } else lastOpens = [{ id: App.id, name: App.name, icon: App.icon }];
 
-      localStorage.setItem("lastopens", jsonNewlastApps);
+      localStorage.setItem("lastopens", JSON.stringify(lastOpens));
+    }
+  }
+
+  function setMostUseApps(App: any) {
+    if (typeof Storage !== undefined) {
+      let mostUseApps: any[];
+      const jsonMostUseApps = localStorage.getItem("mostuseapps");
+
+      if (jsonMostUseApps) {
+        mostUseApps = JSON.parse(jsonMostUseApps);
+        const AppIndex = mostUseApps.findIndex((app) => app.id === App.id);
+
+        if (AppIndex >= 0) {
+          mostUseApps[AppIndex].openings++;
+        } else {
+          mostUseApps = [
+            { id: App.id, name: App.name, icon: App.icon, openings: 1 },
+            ...mostUseApps,
+          ];
+        }
+      } else {
+        mostUseApps = [
+          { id: App.id, name: App.name, icon: App.icon, openings: 1 },
+        ];
+      }
+
+      localStorage.setItem("mostuseapps", JSON.stringify(mostUseApps));
     }
   }
 
@@ -126,7 +157,7 @@ export default function FloatWindow() {
       for (let index = 0; index < windows.length; index++) {
         console.log(windows[index]);
         windows[index].style.zIndex = `${
-          parseInt(windows[index].style.zIndex) - 1
+          parseInt(windows[index].style.zIndex) - 2
         }`;
       }
       window.style.zIndex = "1000";

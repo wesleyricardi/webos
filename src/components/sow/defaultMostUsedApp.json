@@ -1,0 +1,17 @@
+[
+  {
+    "id": "5k78u7",
+    "name": "Easy",
+    "icon": "/apps/easy.png"
+  },
+  {
+    "id": "8n96u7",
+    "name": "Input Text",
+    "icon": "/apps/favicon.ico"
+  },
+  {
+    "id": "4j5gf6",
+    "name": "Hello World",
+    "icon": "/apps/helloworld.svg"
+  }
+]

@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import style from "../../styles/sow/search.module.css";
 import Apps from "./apps";
+import defaultMostUsedApp from "./defaultMostUsedApp.json";
 
 type Props = {
   OpenApp: (app: string) => void;
@@ -11,6 +12,23 @@ type SearchResult = { id: string; name: string; icon: string }[] | null;
 
 function Search({ OpenApp, closeTaskbarsWindows }: Props) {
   const [SearchResult, setSearchResult] = useState<SearchResult>(null);
+  const [MostUseApp, setMostUseApp] = useState(defaultMostUsedApp);
+  const [LatestOpenApp, setLatestOpenApp] = useState<
+    | {
+        id: string;
+        name: string;
+        icon: string;
+      }[]
+    | null
+  >(null);
+
+  useEffect(() => {
+    const jsonMostUseApps = localStorage.getItem("mostuseapps");
+    if (jsonMostUseApps) setMostUseApp(JSON.parse(jsonMostUseApps));
+
+    const jsonLatestOpenApp = localStorage.getItem("lastopens");
+    if (jsonLatestOpenApp) setLatestOpenApp(JSON.parse(jsonLatestOpenApp));
+  }, []);
 
   function doSearch(value: string): void {
     if (value.length >= 3) {
@@ -23,26 +41,60 @@ function Search({ OpenApp, closeTaskbarsWindows }: Props) {
       setSearchResult(null);
     }
   }
+
   return (
     <div className={style.searchResult}>
       {SearchResult ? (
-        <>
-          <h4>Melhor correspondencia:</h4>
+        <ul>
+          <span>Melhor correspondencia</span>
           {SearchResult.map((result, index) => (
-            <div
-              key={"search_index"}
+            <li
+              key={"search_" + index}
               onClick={() => {
                 OpenApp(result.id);
                 closeTaskbarsWindows();
               }}
             >
               <img src={result.icon} alt="" />
-              {result.name}
-            </div>
+              <span>{result.name}</span>
+            </li>
           ))}
-        </>
+        </ul>
       ) : (
-        <div>Mais usados</div>
+        <>
+          <div>
+            <ul className={style.mostUses}>
+              <span>Aplicações mais usadas</span>
+              {MostUseApp?.map((app) => (
+                <li
+                  onClick={() => {
+                    OpenApp(app.id);
+                    closeTaskbarsWindows();
+                  }}
+                >
+                  <img src={app.icon} alt="" />
+                  <span>{app.name}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          {LatestOpenApp && (
+            <ul>
+              <span>Aplicações recentemente abertas</span>
+              {LatestOpenApp.map((app) => (
+                <li
+                  onClick={() => {
+                    OpenApp(app.id);
+                    closeTaskbarsWindows();
+                  }}
+                >
+                  <img src={app.icon} alt="" />
+                  <span>{app.name}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </>
       )}
       <div>
         <label htmlFor="search">
@@ -54,6 +106,7 @@ function Search({ OpenApp, closeTaskbarsWindows }: Props) {
           name="search"
           id="search"
           autoComplete="off"
+          autoFocus
         />
       </div>
     </div>

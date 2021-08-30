@@ -1,5 +1,6 @@
 .menuStart {
   position: absolute;
+  display: flex;
   bottom: 40px;
   left: 0px;
   height: 600px;
@@ -10,44 +11,83 @@
   color: var(--color-dark);
 }
 
-.menuStart > ul {
-  margin: 10px;
-  padding-bottom: 5px;
+.menuStart > div:first-of-type {
+  width: 45px;
+  height: 100%;
+  background-color: var(--contrast-color);
+  margin-right: 1px;
 }
 
-.menuStart > ul:nth-of-type(n + 2) {
-  border-top: rgba(255, 255, 255, 0.4) 1px solid;
+.menuStart > div:first-of-type > span {
+  display: block;
+  width: 100%;
+  padding: 5px 0;
+  transition: background 300ms linear;
 }
 
-.menuStart > ul > span {
+.menuStart > div:first-of-type > span:hover {
+  background-color: var(--main-color);
+}
+
+.menuStart > div:first-of-type > span > img {
+  display: block;
+  margin: 0 auto;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+.menuStart > div:nth-of-type(2) {
+  width: 100%;
+  height: 100%;
+}
+
+.menuStart > div:nth-of-type(2) > ul {
+  background-color: var(--start-menu-emphasis);
+}
+
+.menuStart > div:nth-of-type(2) > ul:nth-last-of-type(n + 2) {
+  margin-bottom: 5px;
+}
+
+.menuStart > div:nth-of-type(2) > ul > span {
   display: block;
   padding: 10px 5px;
+  border-left: var(--main-color) 5px solid;
+  background-color: var(--start-menu-category);
 }
 
-.menuStart > ul > li {
-  /* display: flex; */
+.menuStart > div:nth-of-type(2) > ul > li {
   list-style: none;
   display: inline-block;
   margin: 2px;
   height: 90px;
   width: 90px;
-  background-color: var(--start-menu-icon-color);
-  border: rgba(255, 255, 255, 0.5) 1px solid;
   text-align: center;
-  transition: background 300ms ease;
+  transition: all 100ms linear;
 }
 
-.menuStart > ul > li:hover {
-  background-color: var(--start-menu-icon-hover-color);
-  border: rgba(255, 255, 255, 0.7) 1px solid;
+.menuStart > div:nth-of-type(2) > ul > li:hover {
+  transform: scale(1.03);
 }
 
-.menuStart > ul > li > img {
+.menuStart > div:nth-of-type(2) > ul > li > img {
   height: 60px;
 }
 
-.menuStart > ul > li > span {
+.menuStart > div:nth-of-type(2) > ul > li > span {
   display: inline-block;
   width: 100%;
   font-size: 0.8em;
+}
+
+.menuStart > div:nth-of-type(2) > span {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  width: calc(100% - 41px);
+  background-color: var(--start-menu-category);
+  text-align: center;
+  font-weight: bold;
+  padding: 5px 0;
 }
