@@ -1,0 +1,23 @@
+.notification {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  right: 15px;
+  min-height: 1px;
+  transition: all 300ms linear;
+  bottom: 0;
+}
+
+.notification > li {
+  background-color: rgba(190, 190, 190, 0.7);
+  backdrop-filter: blur(5px);
+  margin: 5px 0;
+  padding: 10px;
+  width: 300px;
+  height: 75px;
+  transition: all 300ms linear;
+}
+
+.notification > li > img {
+  display: none;
+}
