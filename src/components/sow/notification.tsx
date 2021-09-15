@@ -104,7 +104,7 @@ export default function Notification({ OpenApp }: props) {
         <li
           id={`notification_${notification.id}`}
           style={{ opacity: "0" }}
-          key={notification.id}
+          key={"not_" + notification.id}
           onClick={() => OpenApp(notification.appid)}
         >
           <img
