@@ -67,6 +67,7 @@ function Search({ OpenApp, closeTaskbarsWindows }: Props) {
               <span>Aplicações mais usadas</span>
               {MostUseApp?.map((app) => (
                 <li
+                  key={"most_used_" + app.id}
                   onClick={() => {
                     OpenApp(app.id);
                     closeTaskbarsWindows();
@@ -83,6 +84,7 @@ function Search({ OpenApp, closeTaskbarsWindows }: Props) {
               <span>Aplicações recentemente abertas</span>
               {LatestOpenApp.map((app) => (
                 <li
+                  key={"lastopen_" + app.id}
                   onClick={() => {
                     OpenApp(app.id);
                     closeTaskbarsWindows();
