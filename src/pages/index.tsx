@@ -8,7 +8,6 @@ import Search from "../components/sow/search";
 import Desktop from "../components/sow/desktop";
 import Head from "next/head";
 import makeID from "../components/_extra/makeID";
-import Notification from "../components/sow/notification";
 
 type OpenApps = {
   id: string;
@@ -338,7 +337,7 @@ export default function FloatWindow() {
         className={style.window_container}
         id="main"
       >
-        <Notification OpenApp={OpenApp} />
+
         <Desktop OpenApp={OpenApp} />
 
         {openWindows && (
