@@ -355,12 +355,7 @@ export default function FloatWindow() {
           </>
         )}
       </main>
-      {MenuStartopen && (
-        <Nav OpenApp={OpenApp} closeTaskbarsWindows={closeTaskbarsWindows} />
-      )}
-      {WindowSearchOpen && (
-        <Search OpenApp={OpenApp} closeTaskbarsWindows={closeTaskbarsWindows} />
-      )}
+      
       <Taskbar
         closeTaskbarsWindows={closeTaskbarsWindows}
         setMenuStartopen={setMenuStartopen}
@@ -369,7 +364,14 @@ export default function FloatWindow() {
         WindowSearchOpen={WindowSearchOpen}
         zindex={zindex}
         apps={openWindows}
-      />
+      >
+      <>{MenuStartopen && (
+        <Nav OpenApp={OpenApp} closeTaskbarsWindows={closeTaskbarsWindows} />
+      )}
+      {WindowSearchOpen && (
+        <Search OpenApp={OpenApp} closeTaskbarsWindows={closeTaskbarsWindows} />
+      )}</>
+      </Taskbar>
     </>
   );
 }

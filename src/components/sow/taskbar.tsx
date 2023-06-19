@@ -13,6 +13,7 @@ type Props = {
     windowID: string;
     name: string;
   }[];
+  children: JSX.Element;
 };
 
 type Datetime = {
@@ -28,6 +29,7 @@ export default function Taskbar({
   setWindowSearchOpen,
   closeTaskbarsWindows,
   zindex,
+  children
 }: Props) {
   const [Datetime, setDatetime] = useState<Datetime | null>(null);
 
@@ -89,6 +91,8 @@ export default function Taskbar({
 
   return (
     <div className={style.taskbar}>
+    {children}
+    <div className={style.container}>
       <span
         onClick={() => {
           closeTaskbarsWindows();
@@ -105,7 +109,7 @@ export default function Taskbar({
       >
         <img height="17px" src="/lupa.svg" alt="" />
       </span>
-      {apps.map((app) => (
+      <div className={style.openApps}>{apps.map((app) => (
         <div
           key={"min_" + app.windowID}
           onClick={(e) => {
@@ -118,12 +122,14 @@ export default function Taskbar({
         >
           {app.name}
         </div>
-      ))}
+      ))}</div>
+      
 
       <div>
         {Datetime?.hour}
         <span>{Datetime?.date}</span>
       </div>
+    </div>
     </div>
   );
 }

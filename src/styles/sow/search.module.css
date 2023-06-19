@@ -1,9 +1,9 @@
 .searchResult {
   position: absolute;
-  bottom: 40px;
-  left: 45px;
-  height: 600px;
-  width: 500px;
+  top: calc(-75vh - 10px);
+  left: 5px;
+  height: clamp(260px, 75vh, 900px);
+  width: clamp(225px, 50vw, 600px);
   background-color: var(--search-icon-container-color);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
