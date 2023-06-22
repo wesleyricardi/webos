@@ -100,14 +100,13 @@ function window(props: Props) {
     <div
       id={props.app.windowID}
       className={`${style.window} windows`}
-      onPointerUp={props.unselect}
       onPointerDown={(e) => {
         props.select(e);
         props.zindex(e.currentTarget);
       }}
       onDoubleClick={(e) => fullWindow(e.currentTarget)}
-      onPointerMove={hover}
-      onPointerOut={hoverout}
+      onMouseMove={hover}
+      onMouseOut={hoverout}
       style={
         props.app.windowStyle
           ? CSSstring(props.app.windowStyle + "; z-index: 1001")

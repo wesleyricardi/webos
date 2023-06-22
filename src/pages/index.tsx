@@ -170,7 +170,6 @@ export default function FloatWindow() {
     const y = e.clientY - rect.top;
     const h = e.currentTarget.offsetHeight;
     const w = e.currentTarget.offsetWidth;
-
     if (
       e.currentTarget === e.target ||
       x <= 3 ||
@@ -180,7 +179,6 @@ export default function FloatWindow() {
       y >= 30
     ) {
       const coordinates = { x: e.clientX, y: e.clientY };
-
       if (e.currentTarget.style.minWidth !== "100vw") {
         if (x <= 3) {
           toResizeX = {
@@ -235,9 +233,9 @@ export default function FloatWindow() {
   }
 
   function onMove(e: any) {
-    const x = e.clientX;
-    const y = e.clientY;
-    //console.log(x);
+    const x = e.clientX || e.touches[0].clientX;
+    const y = e.clientY || e.touches[0].clientY;
+    
     if (toMove) {
       toMove.element.style.top = `${y - toMove.y}px`;
       toMove.element.style.left = `${x - toMove.x}px`;
@@ -328,12 +326,13 @@ export default function FloatWindow() {
 
       <main
         onClick={unselect}
-        onMouseDown={() => {
+        onPointerDown={() => {
           if (MenuStartopen) setMenuStartopen(false);
           if (WindowSearchOpen) setWindowSearchOpen(false);
         }}
-        onMouseLeave={unselect}
+        onTouchEnd={unselect}
         onMouseMove={onMove}
+        onTouchMove={onMove}
         className={style.window_container}
         id="main"
       >
