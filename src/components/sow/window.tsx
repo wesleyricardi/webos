@@ -84,10 +84,10 @@ function window(props: Props) {
       const w = e.currentTarget.offsetWidth;
       const main = document.getElementById("main") as HTMLElement;
 
-      if (x <= 3) main.style.cursor = "w-resize";
-      else if (x >= w - 3) main.style.cursor = "w-resize";
-      else if (y <= 3) main.style.cursor = "n-resize";
-      else if (y >= h - 3) main.style.cursor = "n-resize";
+      if (x <= 5) main.style.cursor = "w-resize";
+      else if (x >= w - 5) main.style.cursor = "w-resize";
+      else if (y <= 5) main.style.cursor = "n-resize";
+      else if (y >= h - 5) main.style.cursor = "n-resize";
       else main.style.cursor = "auto";
     }
   }

@@ -60,6 +60,9 @@ export default function FloatWindow() {
   const [WindowSearchOpen, setWindowSearchOpen] = useState<boolean>(false);
   const [openWindows, setOpenWindows] = useState<OpenApps[]>([]);
 
+  let margin_to_resize_window = 5
+
+
   let toResizeX: ResizeX | null;
   let toResizeY: ResizeY | null;
   let toMove: MoveWindow | null;
@@ -172,15 +175,15 @@ export default function FloatWindow() {
     const w = e.currentTarget.offsetWidth;
     if (
       e.currentTarget === e.target ||
-      x <= 3 ||
-      y <= 3 ||
-      x >= w - 3 ||
-      y >= h - 3 ||
+      x <= margin_to_resize_window ||
+      y <= margin_to_resize_window ||
+      x >= w - margin_to_resize_window ||
+      y >= h - margin_to_resize_window ||
       y >= 30
     ) {
       const coordinates = { x: e.clientX, y: e.clientY };
       if (e.currentTarget.style.minWidth !== "100vw") {
-        if (x <= 3) {
+        if (x <= margin_to_resize_window) {
           toResizeX = {
             element: e.currentTarget,
             w,
@@ -190,7 +193,7 @@ export default function FloatWindow() {
           };
         }
 
-        if (x >= w - 3) {
+        if (x >= w - margin_to_resize_window) {
           toResizeX = {
             element: e.currentTarget,
             w,
@@ -200,7 +203,7 @@ export default function FloatWindow() {
           };
         }
 
-        if (y <= 3) {
+        if (y <= margin_to_resize_window) {
           toResizeY = {
             element: e.currentTarget,
             h,
@@ -210,7 +213,7 @@ export default function FloatWindow() {
           };
         }
 
-        if (y >= h - 3) {
+        if (y >= h - margin_to_resize_window) {
           toResizeY = {
             element: e.currentTarget,
             h,
@@ -221,7 +224,7 @@ export default function FloatWindow() {
         }
       }
 
-      if (x > 3 && y > 3 && x < w - 3 && y < h - 3 && y < 30)
+      if (x > margin_to_resize_window && y > margin_to_resize_window && x < w - margin_to_resize_window && y < h - margin_to_resize_window && y < 30)
         toMove = { element: e.currentTarget, x, y };
     }
   }
